@@ -19,8 +19,8 @@ app.get('/', function(request, response) {
 });
 
 app.post('/', function(request, response) {
-    var msg = req.body.txtweb-message;
-    var hashMobileNumber = req.body.txtweb-mobile;
+    var msg = request.body.txtweb-message;
+    var hashMobileNumber = request.body.txtweb-mobile;
     console.log('msg: ', msg, 'mobNo: ', hashMobileNumber);
     response.send('Hello World!');
 });

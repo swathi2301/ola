@@ -1,3 +1,4 @@
+//TODO: move to mongodb
 var userDict = {}
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
         return userDict[userHash];
     },
 
-    saveUser : function(hash, name, email, phone) {
+    saveUser : function(hash, email, phone, name) {
         var user = {
             hash: hash,
             name: name,
@@ -20,7 +21,5 @@ module.exports = {
 
 
     }
-
-
 
 };

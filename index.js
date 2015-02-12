@@ -8,7 +8,7 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(morgan('combined'));
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', function(request, response) {
@@ -19,8 +19,8 @@ app.get('/', function(request, response) {
 });
 
 app.post('/', function(request, response) {
-    var msg = request.body.txtweb-message;
-    var hashMobileNumber = request.body.txtweb-mobile;
+    var msg = request.body['txtweb-message'];
+    var hashMobileNumber = request.body['txtweb-mobile'];
     console.log('msg: ', msg, 'mobNo: ', hashMobileNumber);
     response.send('Hello World!');
 });

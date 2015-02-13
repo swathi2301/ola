@@ -11,13 +11,14 @@ app.use(express.static(__dirname + '/public'));
 
 
 //TODO: move all template strings to jade
-var responseStartTemplate = '<html> <head> <title> Ola! </title> <meta http-equiv=\'Content-Type\' content=\'text/html; charset=UTF-8\' /> <meta name=\'txtweb-appkey\' content=\'d5274899-d6d5-40a5-b461-7d444203908b\' /></head><body>';
+//@txtola: d5274899-d6d5-40a5-b461-7d444203908b
+var responseStartTemplate = '<html> <head> <title> Ola! </title> <meta http-equiv=\'Content-Type\' content=\'text/html; charset=UTF-8\' /> <meta name=\'txtweb-appkey\' content=\'c8fdc5e0-056b-4c99-ac5f-95ba249b1e92\' /></head><body>';
 var responseEndTemplate = '</body></html>';
 
 var registrationTemplateString = 'Register using @ola reg email:&lt;email address&gt; phone:&lt;phone number&gt; name:&lt;name&gt;';
 var registrationSuccessfulTemplateString = 'Registration complete! ';
 
-var bookTemplateString = 'Book using @ola book date:&lt;dd/mm/yyyy&gt; time:hh:mm AM/PM from:&lt;from locality&gt; to:&lt;to locality&gt; faddr:&lt;from address&gt; taddr:&lt;to address&gt;'
+var bookTemplateString = 'Book using @ola book date:&lt;dd/mm/yyyy&gt; time:&lt;hh:mm&gt; AM/PM from:&lt;from locality&gt; to:&lt;to locality&gt; faddr:&lt;from address&gt; taddr:&lt;to address&gt;'
 var bookErrorResponseTemplate = 'There was an error booking your cab. Please try again later';
 var bookSuccessResponseTemplate = 'Successfully booked you cab. Ola confirmation number: ';
 

@@ -18,7 +18,8 @@ var registrationTemplateString = 'Register using @ola reg email:&lt;email addres
 var registrationSuccessfulTemplateString = 'Registration complete! ';
 
 var bookTemplateString = 'Book using @ola book date:&lt;dd/mm/yyyy&gt; time:hh:mm AM/PM from:&lt;from locality&gt; to:&lt;to locality&gt; faddr:&lt;from address&gt; taddr:&lt;to address&gt;'
-var bookResponseTemplate = 'Successfully received message. Processing...'
+var bookErrorResponseTemplate = 'There was an error booking your cab. Please try again later';
+var bookSuccessResponseTemplate = 'Successfully booked you cab. Ola confirmation number: ';
 
 // Happy happy scenarios. TODO: handle every single exception
 app.get('/', function(request, response) {
@@ -33,9 +34,18 @@ app.get('/', function(request, response) {
     }
 
     if(/book .*/g.test(txtWebMsg)) {
-        return handleBookMessage(response, txtWebMsg, txtWebMobile);
+         handleBookMessage(response, txtWebMsg, txtWebMobile, function(err, data) {
+            if(err) {
+                return response.send(responseStartTemplate + bookErrorResponseTemplate + responseEndTemplate);
+            }
+             else {
+                return response.send(responseStartTemplate + bookSuccessResponseTemplate + data.confirmationNo + responseEndTemplate)
+            }
+        });
+    } else {
+        return handleEmptyMessage(response, txtWebMobile);
     }
-    return handleEmptyMessage(response, txtWebMobile);
+
 });
 
 app.listen(app.get('port'), function() {
@@ -55,7 +65,7 @@ function handleRegistrationMessage(response, txtWebMsg, txtWebMobile) {
     return response.send(responseStartTemplate + registrationSuccessfulTemplateString + bookTemplateString + responseEndTemplate);
 }
 
-function handleBookMessage(response, txtWebMsg, txtWebMobile) {
+function handleBookMessage(response, txtWebMsg, txtWebMobile, cb) {
     var user = utility.findUser(txtWebMobile);
     if(user == null) {
         response.send(responseStartTemplate + registrationTemplateString + responseEndTemplate);
@@ -72,13 +82,12 @@ function handleBookMessage(response, txtWebMsg, txtWebMobile) {
     console.log('user: ', user, 'bookingDetails: ', bookingDetails);
     bookCab.book(user, bookingDetails, function(err, data) {
         console.log('Completed booking attempt');
-        if(err) {
-            return console.log('Error while booking: ', err);
-         //TODO: push notification failure
-        }
-        console.log('data: ', data);
+
+        //TODO: push notification failure
+
         //TODO: push notification - success
-    })
-    response.send(responseStartTemplate + bookResponseTemplate + responseEndTemplate);
+        return cb(err, data);
+    });
+    //return response.send(responseStartTemplate + bookSuccessResponseTemplate + responseEndTemplate);
 
 }

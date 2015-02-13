@@ -36,6 +36,7 @@ app.get('/', function(request, response) {
 
     if(/book .*/g.test(txtWebMsg)) {
          handleBookMessage(response, txtWebMsg, txtWebMobile, function(err, data) {
+            //TODO: async.
             if(err) {
                 return response.send(responseStartTemplate + bookErrorResponseTemplate + responseEndTemplate);
             }

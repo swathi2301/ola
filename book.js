@@ -63,7 +63,7 @@ var step3 = function(browser, cb) {
             var response = browser.text('#bookingContent > div');
             console.log('Response: ', response);
             if(response != null && response.contains('Thank you for using Olacabs. We have sent you an email and a SMS confirming your booking details. Hope you have a pleasant drive.')){
-                var confirmationNumber = success.substring(success.indexOf('Your Reference No. :') + 'Your Reference No. :'.length, success.indexOf('Kindly use this your Reference'));
+                var confirmationNumber = response.substring(response.indexOf('Your Reference No. :') + 'Your Reference No. :'.length, response.indexOf('Kindly use this your Reference'));
                 var status = {status: 'success', confirmationNo: confirmationNumber}
                 return cb(null, status);
             }
